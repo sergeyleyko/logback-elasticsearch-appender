@@ -31,4 +31,8 @@ public abstract class AbstractPropertyAndEncoder<T> {
 	public boolean allowEmpty() {
 		return property.isAllowEmpty();
 	}
+
+	public boolean rawJson() {
+		return property.isRawJson();
+	}
 }

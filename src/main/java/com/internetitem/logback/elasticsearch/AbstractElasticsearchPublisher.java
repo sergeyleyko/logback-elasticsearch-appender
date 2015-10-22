@@ -53,7 +53,7 @@ public abstract class AbstractElasticsearchPublisher<T> implements Runnable {
 		this.jf.setRootValueSeparator(null);
 		this.jsonGenerator = jf.createGenerator(outputAggregator);
 
-		this.indexPattern = buildPropertyAndEncoder(context, new Property("<index>", settings.getIndex(), false));
+		this.indexPattern = buildPropertyAndEncoder(context, new Property("<index>", settings.getIndex(), false, false));
 		this.propertyList = generatePropertyList(context, properties);
 	}
 
@@ -178,7 +178,12 @@ public abstract class AbstractElasticsearchPublisher<T> implements Runnable {
 		for (AbstractPropertyAndEncoder<T> pae : propertyList) {
 			String value = pae.encode(event);
 			if (pae.allowEmpty() || (value != null && !value.isEmpty())) {
-				gen.writeObjectField(pae.getName(), value);
+				if (pae.rawJson()) {
+					gen.writeFieldName(pae.getName());
+					gen.writeRaw(value);
+				} else {
+					gen.writeObjectField(pae.getName(), value);
+				}
 			}
 		}
 

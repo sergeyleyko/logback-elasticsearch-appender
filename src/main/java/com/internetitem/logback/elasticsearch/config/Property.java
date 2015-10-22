@@ -4,14 +4,16 @@ public class Property {
 	private String name;
 	private String value;
 	private boolean allowEmpty;
+	private boolean rawJson;
 
 	public Property() {
 	}
 
-	public Property(String name, String value, boolean allowEmpty) {
+	public Property(String name, String value, boolean allowEmpty, boolean rawJson) {
 		this.name = name;
 		this.value = value;
 		this.allowEmpty = allowEmpty;
+		this.rawJson = rawJson;
 	}
 
 	public String getName() {
@@ -36,5 +38,13 @@ public class Property {
 
 	public void setAllowEmpty(boolean allowEmpty) {
 		this.allowEmpty = allowEmpty;
+	}
+
+	public boolean isRawJson() {
+		return rawJson;
+	}
+
+	public void setRawJson(boolean rawJson) {
+		this.rawJson = rawJson;
 	}
 }
